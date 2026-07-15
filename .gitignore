@@ -1,0 +1,31 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# Test Results
+TestResults/
+
+# NuGet packages
+packages/
+!packages/build/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
