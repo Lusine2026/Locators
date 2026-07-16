@@ -8,6 +8,7 @@ namespace EpamJobSearchAutomation.Tests
     {
         [TestCase("Java", "All available countries")]
         [TestCase("Python", "All available countries")]
+
         public void ValidateJobSearch(string language, string location)
         {
 
@@ -33,8 +34,8 @@ namespace EpamJobSearchAutomation.Tests
             jobs.ClickSearch();
             jobs.OpenLastJob();
 
-            jobDetailsAssertions.ValidateJobTitleContains(language);
             jobDetailsAssertions.ValidateJobTitleIsNotEmpty();
+            jobDetailsAssertions.ValidateJobTitleContains(language);           
         }
     }
 }

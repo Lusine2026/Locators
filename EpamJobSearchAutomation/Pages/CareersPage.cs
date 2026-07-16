@@ -21,6 +21,7 @@ namespace EpamJobSearchAutomation.Pages
 
         public void ClickStartYourSearchHereButton()
         {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(50));
             wait.Until(d => StartYourSearchHere.Displayed && StartYourSearchHere.Enabled);
             StartYourSearchHere.Click();
         }

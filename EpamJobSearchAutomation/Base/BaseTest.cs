@@ -10,13 +10,17 @@ namespace EpamJobSearchAutomation.Base
         [SetUp]
         public void Setup()
         {
-            ChromeOptions options = new ChromeOptions();
+            var options = new ChromeOptions();
 
+            // Browser-specific capability
             options.AddArgument("--start-maximized");
 
             Driver = new ChromeDriver(options);
 
-            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+            // WebDriver browser interaction
+            Driver.Manage().Window.Maximize();
+
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
             Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
         }
