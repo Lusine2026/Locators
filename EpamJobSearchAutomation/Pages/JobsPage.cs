@@ -86,6 +86,6 @@ namespace EpamJobSearchAutomation.Pages
             => SearchInputXPathOperator;
 
         public String GetLatestJobUsingAxes()
-           => LatestJobAxes.Text;
+            => LatestJobAxes.Text;
     }
 }

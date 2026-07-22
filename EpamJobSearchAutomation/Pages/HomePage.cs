@@ -22,7 +22,7 @@ namespace EpamJobSearchAutomation.Pages
         public HomePage(IWebDriver driver)
         {
             this.driver = driver;
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
         }
 
         public void Open()

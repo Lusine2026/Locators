@@ -18,7 +18,8 @@ namespace EpamJobSearchAutomation.Pages
         }
 
         public void ValidateJobTitleContains(string keyword)
-        {          
+        {
+            waitHelper.WaitForElement(jobDetailInfo);
             Assert.That(IsLanguagePresent(keyword), Is.True, $"Language '{keyword}' was NOT found on job details page.");
         }
 

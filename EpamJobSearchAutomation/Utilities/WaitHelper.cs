@@ -13,7 +13,7 @@ namespace EpamJobSearchAutomation.Utilities
             this.driver = driver;
 
             wait = new WebDriverWait(driver,
-                TimeSpan.FromSeconds(30));
+                TimeSpan.FromSeconds(50));
         }
 
         public IWebElement WaitUntilVisible(By locator)
