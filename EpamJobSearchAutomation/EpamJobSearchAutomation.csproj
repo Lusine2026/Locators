@@ -29,7 +29,7 @@
 		<PackageReference Include="NUnit3TestAdapter" Version="6.2.0" />
 		<PackageReference Include="Selenium.Support" Version="4.45.0" />
 		<PackageReference Include="Selenium.WebDriver" Version="4.45.0" />
-		<PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="150.0.7871.4900" />
+		<PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="150.0.7871.181" />
 	</ItemGroup>
 
 	<ItemGroup>

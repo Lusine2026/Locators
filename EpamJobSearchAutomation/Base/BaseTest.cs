@@ -1,6 +1,6 @@
+using EpamJobSearchAutomation.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using EpamJobSearchAutomation.Configuration;
 
 namespace EpamJobSearchAutomation.Base
 {
@@ -19,6 +19,12 @@ namespace EpamJobSearchAutomation.Base
             {
                 options.AddArgument("--headless=new");
                 options.AddArgument("--window-size=1920,1080");
+                //               options.AddArgument("--disable-blink-features=AutomationControlled");
+
+                options.AddArgument("--start-maximized");
+                options.AddArgument("--disable-dev-shm-usage");
+                options.AddArgument("--no-sandbox");
+                options.AddArgument("--disable-gpu");
             }
 
             Driver = new ChromeDriver(options);
@@ -37,18 +43,9 @@ namespace EpamJobSearchAutomation.Base
 
         [TearDown]
         public void TearDown()
-        {
-            if (Driver != null)
-            {
-                var screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
-
-                screenshot.SaveAsFile(
-                    "headless-failure.png"
-                );
-
+        {         
                 Driver.Quit();
                 Driver.Dispose();
-            }
         }
     }
 }

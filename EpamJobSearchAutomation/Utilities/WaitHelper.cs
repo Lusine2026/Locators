@@ -66,7 +66,7 @@ namespace EpamJobSearchAutomation.Utilities
 
         public void WaitForElement(By locator)
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
 
             wait.Until(d =>
             {
