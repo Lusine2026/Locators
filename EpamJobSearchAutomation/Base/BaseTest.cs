@@ -19,7 +19,7 @@ namespace EpamJobSearchAutomation.Base
             {
                 options.AddArgument("--headless=new");
                 options.AddArgument("--window-size=1920,1080");
-                //               options.AddArgument("--disable-blink-features=AutomationControlled");
+                options.AddArgument("--disable-blink-features=AutomationControlled");
 
                 options.AddArgument("--start-maximized");
                 options.AddArgument("--disable-dev-shm-usage");
