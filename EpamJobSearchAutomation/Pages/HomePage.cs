@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using EpamJobSearchAutomation.Enum;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace EpamJobSearchAutomation.Pages
@@ -22,7 +23,7 @@ namespace EpamJobSearchAutomation.Pages
         public HomePage(IWebDriver driver)
         {
             this.driver = driver;
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(50));
         }
 
         public void Open()
@@ -30,10 +31,10 @@ namespace EpamJobSearchAutomation.Pages
             driver.Navigate().GoToUrl("https://www.epam.com/");
         }
 
-        public void GoToCareers()
+        public void GoToPageFromMenu(Menu page)
         {
-            wait.Until(d => CareersLink.Displayed && CareersLink.Enabled);
-            CareersLink.Click();
+            driver.FindElement(By.XPath(page.GetValue())).Click();
+            wait.Until(d => d.Url.Contains(page.ToString(), StringComparison.OrdinalIgnoreCase));
         }
 
         public void GoToCareersUsingPartialText()

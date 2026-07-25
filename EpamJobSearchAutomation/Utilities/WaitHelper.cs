@@ -7,13 +7,11 @@ namespace EpamJobSearchAutomation.Utilities
     {
         private readonly IWebDriver driver;
         private readonly WebDriverWait wait;
-
+        private readonly By jobResults = By.XPath("//a[@data-testid='job-card-link']");
         public WaitHelper(IWebDriver driver)
         {
             this.driver = driver;
-
-            wait = new WebDriverWait(driver,
-                TimeSpan.FromSeconds(50));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(50));
         }
 
         public IWebElement WaitUntilVisible(By locator)
@@ -46,10 +44,10 @@ namespace EpamJobSearchAutomation.Utilities
                 driver.PageSource.Contains(text));
         }
 
-        public void WaitForPage(string menuTab)
+        public void WaitForPage(string urlText)
         {
             wait.Until(driver =>
-                driver.Url.ToLower().Contains(menuTab));
+                driver.Url.ToLower().Contains(urlText));
         }
 
         public void WaitForPageLoad()
@@ -66,15 +64,26 @@ namespace EpamJobSearchAutomation.Utilities
 
         public void WaitForElement(By locator)
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
-
             wait.Until(d =>
             {
                 try
                 {
-                    return d.FindElement(locator).Displayed;
+                    var element = d.FindElement(locator);
+                    return element.Displayed && element.Enabled;
                 }
                 catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+            wait.Until(d =>
+            {
+                try
+                {
+                    var element = d.FindElement(locator);
+                    return element.Size.Height > 0 && element.Size.Width > 0;
+                }
+                catch
                 {
                     return false;
                 }
@@ -83,13 +92,25 @@ namespace EpamJobSearchAutomation.Utilities
 
         public IWebElement WaitForFirstElement(By locator)
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(50));
 
             return wait.Until(d =>
             {
                 var elements = d.FindElements(locator);
                 return elements.FirstOrDefault();
             });
+        }
+
+        public string WaitForDownload(string expectedFileName)
+        {
+            string downloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),"Downloads");
+            wait.Until(_ => Directory.GetFiles(downloadFolder).Any(f => Path.GetFileName(f).Contains(expectedFileName)));
+            return Directory.GetFiles(downloadFolder).First(f => Path.GetFileName(f).Contains(expectedFileName));
+        }
+
+        public void WaitForJobResults()
+        {
+            wait.Until(d => d.FindElements(jobResults).Count > 0);
         }
     }
 }

@@ -8,7 +8,6 @@ namespace EpamJobSearchAutomation.Tests
         [TestCase("BLOCKCHAIN")]
         [TestCase("Cloud")]
         [TestCase("Automation")]
-
         public void ValidateSearchResults(string searchTerm)
         {
             var home = new Pages.HomePage(Driver);

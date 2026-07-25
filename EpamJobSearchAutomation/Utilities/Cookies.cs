@@ -1,9 +1,6 @@
 ﻿using EpamJobSearchAutomation.Base;
-using EpamJobSearchAutomation.Utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.PageObjects;
-using SeleniumExtras.WaitHelpers;
 
 namespace EpamJobSearchAutomation.Utilities
 {
@@ -18,7 +15,7 @@ namespace EpamJobSearchAutomation.Utilities
         public Cookies(IWebDriver driver)
         {
             this.driver = driver;
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
         }
 
         public void AcceptCookies()
@@ -38,6 +35,7 @@ namespace EpamJobSearchAutomation.Utilities
                         return true;
                     }
                 });
+                wait.Until(d => driver.FindElements(By.CssSelector("[class*='cookie'], [class*='Cookie']")).Count == 0);
             }
             catch
             {
