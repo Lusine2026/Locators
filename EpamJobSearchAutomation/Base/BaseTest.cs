@@ -43,9 +43,12 @@ namespace EpamJobSearchAutomation.Base
 
         [TearDown]
         public void TearDown()
-        {         
+        {
+            if (Driver != null)
+            {
                 Driver.Quit();
                 Driver.Dispose();
+            }
         }
     }
 }

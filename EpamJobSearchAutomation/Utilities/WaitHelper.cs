@@ -104,8 +104,12 @@ namespace EpamJobSearchAutomation.Utilities
         public string WaitForDownload(string expectedFileName)
         {
             string downloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),"Downloads");
-            wait.Until(_ => Directory.GetFiles(downloadFolder).Any(f => Path.GetFileName(f).Contains(expectedFileName)));
-            return Directory.GetFiles(downloadFolder).First(f => Path.GetFileName(f).Contains(expectedFileName));
+
+            wait.Until(_ => Directory.GetFiles(downloadFolder).Any(f => Path.GetFileName(f).Contains(expectedFileName) &&
+                !f.EndsWith(".crdownload", StringComparison.OrdinalIgnoreCase)));
+
+            return Directory.GetFiles(downloadFolder).First(f => Path.GetFileName(f).Contains(expectedFileName) &&
+            !f.EndsWith(".crdownload", StringComparison.OrdinalIgnoreCase));
         }
 
         public void WaitForJobResults()
