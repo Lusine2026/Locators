@@ -1,5 +1,4 @@
-﻿using EpamJobSearchAutomation.Utilities;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace EpamJobSearchAutomation.Pages
@@ -10,12 +9,10 @@ namespace EpamJobSearchAutomation.Pages
         {
             this.driver = driver;
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            waitHelper = new WaitHelper(driver);
         }
 
         private readonly IWebDriver driver;
         private readonly WebDriverWait wait;
-        private readonly WaitHelper waitHelper;
         protected internal By jobDetailInfo = By.XPath("//span[contains(@class,'JobDetails')]");
 
         public IWebElement JobDetailInfo => driver.FindElement(jobDetailInfo);

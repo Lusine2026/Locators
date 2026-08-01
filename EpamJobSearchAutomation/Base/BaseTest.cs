@@ -1,3 +1,4 @@
+using EpamJobSearchAutomation.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -10,19 +11,34 @@ namespace EpamJobSearchAutomation.Base
         [SetUp]
         public void Setup()
         {
+            var browserSettings = ConfigurationHelper.BrowserSettings;
+
             var options = new ChromeOptions();
 
-            // Browser-specific capability
-            options.AddArgument("--start-maximized");
+            if (browserSettings.Headless)
+            {
+                options.AddArgument("--headless=new");
+                options.AddArgument("--window-size=1920,1080");
+                options.AddArgument("--disable-blink-features=AutomationControlled");
+
+                options.AddArgument("--start-maximized");
+                options.AddArgument("--disable-dev-shm-usage");
+                options.AddArgument("--no-sandbox");
+                options.AddArgument("--disable-gpu");
+            }
 
             Driver = new ChromeDriver(options);
 
-            // WebDriver browser interaction
-            Driver.Manage().Window.Maximize();
+            if (!browserSettings.Headless)
+            {
+                Driver.Manage().Window.Maximize();
+            }
 
-            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+            Driver.Manage().Timeouts().ImplicitWait =
+                TimeSpan.FromSeconds(browserSettings.ImplicitWaitSeconds);
 
-            Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+            Driver.Manage().Timeouts().PageLoad =
+                TimeSpan.FromSeconds(browserSettings.PageLoadTimeoutSeconds);
         }
 
         [TearDown]

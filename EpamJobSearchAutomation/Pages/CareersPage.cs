@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
-using System.Collections.ObjectModel;
 
 namespace EpamJobSearchAutomation.Pages
 {
@@ -16,19 +14,13 @@ namespace EpamJobSearchAutomation.Pages
         public CareersPage(IWebDriver driver)
         {
             this.driver = driver;
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(25));
         }
 
         public void ClickStartYourSearchHereButton()
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(50));
             wait.Until(d => StartYourSearchHere.Displayed && StartYourSearchHere.Enabled);
             StartYourSearchHere.Click();
-        }
-
-        public void WaitForPage()
-        {
-            wait.Until(d => d.Url.Contains("careers"));
         }
     }
 }
