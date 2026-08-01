@@ -1,12 +1,13 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System.Collections.ObjectModel;
+using EpamJobSearchAutomation.Framework;
 
-namespace EpamJobSearchAutomation.Pages
+namespace EpamJobSearchAutomation.Business.Pages
 {
-    public class SearchPage
+    public class SearchPage : BasePage
     {
-        public SearchPage(IWebDriver driver)
+        public SearchPage(IWebDriver driver) : base(driver)
         {
             this.driver = driver;
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));

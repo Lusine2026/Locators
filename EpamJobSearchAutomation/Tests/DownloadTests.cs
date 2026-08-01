@@ -1,6 +1,7 @@
-﻿using EpamJobSearchAutomation.Base;
-using EpamJobSearchAutomation.Enum;
-using EpamJobSearchAutomation.Pages;
+﻿using EpamJobSearchAutomation.Business.Enums;
+using EpamJobSearchAutomation.Business.Steps;
+using EpamJobSearchAutomation.Framework;
+using EpamJobSearchAutomation.Tests.Assertions;
 
 namespace EpamJobSearchAutomation.Tests
 {
@@ -9,21 +10,19 @@ namespace EpamJobSearchAutomation.Tests
         [TestCase("Code-Of-Conduct", Menu.About)]
         public void ValidateDownloadFunction(string fileName, Menu page)
         {
-            var home = new HomePage(Driver);
-            var cookies = new Utilities.Cookies(Driver);
-            var searchAssertions = new SearchAssertions(Driver);
-            var about = new AboutPage(Driver);
+            var homeSteps = new HomeSteps(Driver);
+            var aboutSteps = new AboutSteps(Driver);
             var aboutAssertions = new AboutAssertions(Driver);
-            var originalWindow = Driver.CurrentWindowHandle;
-            var helpers = new Utilities.Helper(Driver);
+            var elementHelper = new ElementHelper(Driver);
 
-            home.Open();
-            cookies.AcceptCookies();
-            home.GoToPageFromMenu(page);
-            about.ClickPolicyLink(Policies.CodeOfEthicalConductPDF);
+            var originalWindow = Driver.CurrentWindowHandle;
+
+            homeSteps.OpenHomePage();
+            aboutSteps.DownloadPolicyDocument(page, Policies.CodeOfEthicalConductPDF);
 
             aboutAssertions.ValidateDownloadedFileName(fileName);
-            helpers.ClosePdfWindow(originalWindow);
+
+            elementHelper.ClosePdfWindow(originalWindow);
         }
     }
 }

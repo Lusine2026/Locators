@@ -1,4 +1,4 @@
-﻿namespace EpamJobSearchAutomation.Enum
+﻿namespace EpamJobSearchAutomation.Business.Enums
 {
     public enum Policies
     {

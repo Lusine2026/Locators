@@ -1,7 +1,6 @@
-﻿using EpamJobSearchAutomation.Base;
-using EpamJobSearchAutomation.Enum;
-using EpamJobSearchAutomation.Pages;
-using EpamJobSearchAutomation.Utilities;
+﻿using EpamJobSearchAutomation.Business.Enums;
+using EpamJobSearchAutomation.Business.Steps;
+using EpamJobSearchAutomation.Tests.Assertions;
 
 namespace EpamJobSearchAutomation.Tests
 {
@@ -10,21 +9,15 @@ namespace EpamJobSearchAutomation.Tests
         [TestCase(Menu.Insights)]
         public void ValidateArticleTitleOnInsightsResearchPage(Menu page)
         {
-            HomePage home = new HomePage(Driver);
-            InsightsPage insights = new InsightsPage(Driver);
-            InsightsResearchAssertions insightsResearchAssertions = new InsightsResearchAssertions(Driver);
-            var cookies = new Cookies(Driver);
+            var homeSteps = new HomeSteps(Driver);
+            var insightsSteps = new InsightsSteps(Driver);
+            var insightsAssertions = new InsightsResearchAssertions(Driver);
 
-            home.Open();
-            cookies.AcceptCookies();
-            home.GoToPageFromMenu(page);
-            insights.SwipeCarousel(2);
-            var actualArticleName = insights.GetArticleTitle();
-            insights.ClickReadMore();
+            homeSteps.OpenHomePage();
 
-            insightsResearchAssertions.ValidateArticleTitle(actualArticleName);
+            string actualArticleTitle = insightsSteps.OpenInsightsArticle(page, 2);
+
+            insightsAssertions.ValidateArticleTitle(actualArticleTitle);
         }
-
-       
     }
 }
