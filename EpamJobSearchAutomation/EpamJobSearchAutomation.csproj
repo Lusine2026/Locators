@@ -40,7 +40,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="appsettings.json">
+		<None Update="tests\Tests_Old\AppSettings\appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
@@ -50,7 +50,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="NLog.config">
+		<None Update="tests\Tests_Old\NLog.config">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

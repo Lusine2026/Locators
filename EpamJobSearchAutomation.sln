@@ -3,12 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.37012.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpamJobSearchAutomation", "EpamJobSearchAutomation\EpamJobSearchAutomation.csproj", "{13FE71D4-16C4-4AA7-8D81-51FE2B0C994C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpamJobSearchAutomation.Framework", "..\src\EpamJobSearchAutomation.Framework\EpamJobSearchAutomation.Framework.csproj", "{513B0474-0632-4202-B595-AEDE74DDE299}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpamJobSearchAutomation.Business", "..\src\EpamJobSearchAutomation.Business\EpamJobSearchAutomation.Business.csproj", "{C461245D-BEDE-4D98-9BC5-FECC8ED39D4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpamJobSearchAutomation.Tests", "..\tests\EpamJobSearchAutomation.Tests\EpamJobSearchAutomation.Tests.csproj", "{3612DF21-8006-4C57-81F7-10CA3139B690}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,10 +20,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{13FE71D4-16C4-4AA7-8D81-51FE2B0C994C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13FE71D4-16C4-4AA7-8D81-51FE2B0C994C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13FE71D4-16C4-4AA7-8D81-51FE2B0C994C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13FE71D4-16C4-4AA7-8D81-51FE2B0C994C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{513B0474-0632-4202-B595-AEDE74DDE299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{513B0474-0632-4202-B595-AEDE74DDE299}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{513B0474-0632-4202-B595-AEDE74DDE299}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{513B0474-0632-4202-B595-AEDE74DDE299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C461245D-BEDE-4D98-9BC5-FECC8ED39D4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C461245D-BEDE-4D98-9BC5-FECC8ED39D4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C461245D-BEDE-4D98-9BC5-FECC8ED39D4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C461245D-BEDE-4D98-9BC5-FECC8ED39D4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3612DF21-8006-4C57-81F7-10CA3139B690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3612DF21-8006-4C57-81F7-10CA3139B690}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3612DF21-8006-4C57-81F7-10CA3139B690}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3612DF21-8006-4C57-81F7-10CA3139B690}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
