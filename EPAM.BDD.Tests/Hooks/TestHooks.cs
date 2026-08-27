@@ -1,25 +1,22 @@
-﻿using Reqnroll;
-using EPAM.BDD.Tests.Drivers;
+﻿using OpenQA.Selenium;
+using Reqnroll;
 
 namespace EPAM.BDD.Tests.Hooks;
 
 [Binding]
 public class TestHooks
 {
-    private readonly WebDriverManager _webDriverManager;
+    private readonly IWebDriver _driver;
 
-    public TestHooks(WebDriverManager webDriverManager)
+    public TestHooks(IWebDriver driver)
     {
-        this._webDriverManager = webDriverManager
-            ?? throw new InvalidOperationException(
-                "WebDriverManager was not injected by Reqnroll.");
+        _driver = driver;
     }
-
-    [BeforeScenario]
-    public void BeforeScenario()
-        => _webDriverManager.Start();
 
     [AfterScenario]
     public void AfterScenario()
-        => _webDriverManager.Stop();
+    {
+        _driver.Quit();
+        _driver.Dispose();
+    }
 }

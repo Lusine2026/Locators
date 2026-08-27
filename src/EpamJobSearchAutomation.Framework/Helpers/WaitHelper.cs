@@ -6,9 +6,11 @@ namespace EpamJobSearchAutomation.Framework.Helpers
     public class WaitHelper
     {
         private readonly WebDriverWait wait;
+        private readonly IWebDriver driver;
 
         public WaitHelper(IWebDriver driver)
         {
+            this.driver = driver;
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(50));
         }
 
@@ -198,6 +200,12 @@ namespace EpamJobSearchAutomation.Framework.Helpers
                     return false;
                 }
             });
+        }
+
+        public bool Until(Func<IWebDriver, bool> condition, TimeSpan timeout)
+        {
+            var customWait = new WebDriverWait(driver, timeout);
+            return customWait.Until(condition);
         }
     }
 }

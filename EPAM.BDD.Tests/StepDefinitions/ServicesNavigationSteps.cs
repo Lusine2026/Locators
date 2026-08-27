@@ -1,5 +1,5 @@
-﻿using EPAM.BDD.Tests.Drivers;
-using EPAM.BDD.Tests.Pages;
+﻿using EpamJobSearchAutomation.Business.Enums;
+using EpamJobSearchAutomation.Business.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using Reqnroll;
@@ -15,9 +15,9 @@ public class ServicesNavigationSteps
     private readonly CookieBanner _cookieBanner;
     private string _selectedCategory = string.Empty;
 
-    public ServicesNavigationSteps(WebDriverManager webDriverManager)
+    public ServicesNavigationSteps(IWebDriver driver)
     {
-        _driver = webDriverManager.Driver;
+        _driver = driver;
 
         _homePage = new HomePage(_driver);
         _servicesPage = new ServicesPage(_driver);
@@ -34,7 +34,7 @@ public class ServicesNavigationSteps
     [When("I open the Services menu")]
     public void WhenIOpenTheServicesMenu()
     {
-        _homePage.OpenServicesMenu();
+        _homePage.HoverOverMenu(Menu.Services);
     }
 
     [When("I select the {string} service category")]

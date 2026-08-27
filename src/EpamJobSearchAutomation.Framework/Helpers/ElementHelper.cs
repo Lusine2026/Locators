@@ -46,20 +46,16 @@ namespace EpamJobSearchAutomation.Framework.Helpers
 
         public void ClosePdfWindow(string originalWindow)
         {
-            if (driver.WindowHandles.Count > 1)
+            foreach (var window in driver.WindowHandles.ToList())
             {
-                foreach (var window in driver.WindowHandles)
+                if (window != originalWindow)
                 {
-                    if (window != originalWindow)
-                    {
-                        driver.SwitchTo().Window(window);
-                        driver.Close();
-                        break;
-                    }
+                    driver.SwitchTo().Window(window);
+                    driver.Close();
                 }
-
-                driver.SwitchTo().Window(originalWindow);
             }
+
+            driver.SwitchTo().Window(originalWindow);
         }
     }
 }

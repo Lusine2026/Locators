@@ -1,5 +1,6 @@
-﻿using EPAM.BDD.Tests.Drivers;
+﻿using EpamJobSearchAutomation.Framework.Browser;
 using Microsoft.Extensions.DependencyInjection;
+using OpenQA.Selenium;
 using Reqnroll.Microsoft.Extensions.DependencyInjection;
 
 namespace EPAM.BDD.Tests;
@@ -11,7 +12,8 @@ public static class ReqnrollTestDependencies
     {
         var services = new ServiceCollection();
 
-        services.AddScoped<WebDriverManager>();
+        services.AddScoped<IWebDriver>(_ =>
+            BrowserFactory.CreateDriver());
 
         return services;
     }
