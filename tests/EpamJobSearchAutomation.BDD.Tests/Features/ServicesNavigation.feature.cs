@@ -11,7 +11,7 @@
 #region Designer generated code
 #pragma warning disable
 using Reqnroll;
-namespace EPAM.BDD.Tests.Features
+namespace EpamJobSearchAutomation.BDD.Tests.Features
 {
     
     
