@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -10,26 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="NLog.config" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="NUnit" Version="4.6.1" />
-    <PackageReference Include="NUnit.Analyzers" Version="3.9.0" />
+	<PackageReference Include="NUnit" Version="4.6.1" />
+	<PackageReference Include="NUnit.Analyzers" Version="3.9.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\EpamJobSearchAutomation.Business\EpamJobSearchAutomation.Business.csproj" />
-    <ProjectReference Include="..\..\src\EpamJobSearchAutomation.Framework\EpamJobSearchAutomation.Framework.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,9 +22,22 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\src\EpamJobSearchAutomation.Business\EpamJobSearchAutomation.Business.csproj" />
+		<ProjectReference Include="..\..\src\EpamJobSearchAutomation.Framework\EpamJobSearchAutomation.Framework.csproj" />
+	</ItemGroup>
 
+	<ItemGroup>
 		<None Update="NLog.config">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="..\..\src\EpamJobSearchAutomation.Framework\AppSettings\*.json"
+				 Link="AppSettings\%(Filename)%(Extension)">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+
 </Project>
