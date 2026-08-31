@@ -1,5 +1,4 @@
 ﻿using EpamJobSearchAutomation.Framework.API;
-using EpamJobSearchAutomation.Framework.API.Builders;
 using EpamJobSearchAutomation.Framework.Logging;
 using RestSharp;
 
@@ -11,14 +10,12 @@ public class InvalidEndpointClient : ApiClient
     {
         Logger.Info("Sending GET request to /invalidendpoint");
 
-        var request = new ApiRequestBuilder("invalidendpoint", Method.Get)
-            .Build();
-
-        var response = await Client.ExecuteAsync(request);
+        var response = await GetAsync("invalidendpoint");
 
         Logger.Info($"Received response with status code: {(int)response.StatusCode}");
 
         return response;
     }
 }
+
 

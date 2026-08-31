@@ -7,7 +7,7 @@ namespace EpamJobSearchAutomation.API.Tests.Tests;
 
 [Parallelizable(ParallelScope.All)]
 [TestFixture]
-public class UserApiTests : ApiTestBase
+public class UserApiTests
 {
     private readonly UsersClient _usersClient = new();
 
@@ -23,7 +23,7 @@ public class UserApiTests : ApiTestBase
 
         Logger.Info("Validating that the response status code is 200 OK");
 
-        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         Logger.Info("Validating that the response contains users");
 
@@ -36,14 +36,29 @@ public class UserApiTests : ApiTestBase
         {
             Assert.Multiple((Action)(() =>
             {
-                Assert.That(user.Id, Is.GreaterThan(0), "User id should be greater than 0");
-                Assert.That(user.Name, Is.Not.Null.And.Not.Empty, "User name should not be empty");
-                Assert.That(user.Username, Is.Not.Null.And.Not.Empty, "Username should not be empty");
-                Assert.That(user.Email, Is.Not.Null.And.Not.Empty, "Email should not be empty");
-                Assert.That(user.Address, Is.Not.Null, "Address should not be null");
-                Assert.That(user.Phone, Is.Not.Null.And.Not.Empty, "Phone should not be empty");
-                Assert.That(user.Website, Is.Not.Null.And.Not.Empty, "Website should not be empty");
-                Assert.That(user.Company, Is.Not.Null, "Company should not be null");
+                Assert.That(user.Id, Is.GreaterThan(0),
+                    "User id should be greater than 0");
+
+                Assert.That(user.Name, Is.Not.Null.And.Not.Empty,
+                    "User name should not be empty");
+
+                Assert.That(user.Username, Is.Not.Null.And.Not.Empty,
+                    "Username should not be empty");
+
+                Assert.That(user.Email, Is.Not.Null.And.Not.Empty,
+                    "Email should not be empty");
+
+                Assert.That(user.Address, Is.Not.Null,
+                    "Address should not be null");
+
+                Assert.That(user.Phone, Is.Not.Null.And.Not.Empty,
+                    "Phone should not be empty");
+
+                Assert.That(user.Website, Is.Not.Null.And.Not.Empty,
+                    "Website should not be empty");
+
+                Assert.That(user.Company, Is.Not.Null,
+                    "Company should not be null");
             }));
         }
     }
@@ -165,5 +180,3 @@ public class UserApiTests : ApiTestBase
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 }
-
-
