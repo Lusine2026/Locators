@@ -25,14 +25,20 @@ namespace EpamJobSearchAutomation.Framework.Browser
 
             try
             {
-                var button = waitHelper.Until(
-                    driver =>
+                waitHelper.Until(
+                    d =>
                     {
                         try
                         {
-                            var element = driver.FindElement(acceptCookiesButton);
+                            var element = d.FindElement(acceptCookiesButton);
 
-                            return element.Displayed && element.Enabled;
+                            if (!element.Displayed || !element.Enabled)
+                                return false;
+
+                            ((IJavaScriptExecutor)d)
+                                .ExecuteScript("arguments[0].click();", element);
+
+                            return true;
                         }
                         catch (NoSuchElementException)
                         {
@@ -45,24 +51,12 @@ namespace EpamJobSearchAutomation.Framework.Browser
                     },
                     TimeSpan.FromSeconds(5));
 
-                if (!button)
-                {
-                    Logger.Info("Cookie banner not displayed. Continuing without accepting cookies.");
-                    return;
-                }
-
-                var cookieButton = driver.FindElement(acceptCookiesButton);
-
-                ((IJavaScriptExecutor)driver)
-                    .ExecuteScript("arguments[0].click();", cookieButton);
-
                 Logger.Info("Cookies accepted");
             }
-            catch (Exception ex)
+            catch (WebDriverTimeoutException)
             {
                 Logger.Info("Cookies button was not found. Continuing without accepting cookies.");
             }
         }
-
     }
 }
