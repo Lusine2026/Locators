@@ -2,6 +2,7 @@
 using EpamJobSearchAutomation.Framework.Configuration;
 using EpamJobSearchAutomation.Framework.Pages;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 namespace EpamJobSearchAutomation.Business.Pages
 {
@@ -31,6 +32,17 @@ namespace EpamJobSearchAutomation.Business.Pages
             WaitHelper.WaitUntilClickable(searchIcon).Click();
             WaitHelper.WaitUntilVisible(searchBox).SendKeys(keyword);
             WaitHelper.WaitUntilClickable(findButton).Click();
+        }
+
+        public void HoverOverMenu(Menu page)
+        {
+            var menuLocator = By.XPath(page.GetValue());
+
+            var menuElement = WaitHelper.WaitUntilVisible(menuLocator);
+
+            new Actions(Driver)
+                .MoveToElement(menuElement)
+                .Perform();
         }
     }
 }
