@@ -33,24 +33,32 @@ namespace EpamJobSearchAutomation.Business.Pages
         {
             var locator = By.XPath(page.GetValue());
 
-            Logger.Info($"Opening '{page}' page.");
+            var element = WaitHelper.WaitUntilVisible(locator);
 
-            WaitHelper.WaitUntilClickable(locator).Click();
-            WaitHelper.WaitForPage(page.ToString());
-        }
-
-
-        public void SearchByMagnifierIcon(string keyword)
-        {
-            var searchButton = WaitHelper.WaitUntilClickable(searchIcon);
+            ((IJavaScriptExecutor)Driver).ExecuteScript(
+                "arguments[0].scrollIntoView({block: 'center'});",
+                element);
 
             ((IJavaScriptExecutor)Driver).ExecuteScript(
                 "arguments[0].click();",
+                element);
+
+            WaitHelper.WaitForPage(page.ToString());
+        }
+
+        public void SearchByMagnifierIcon(string keyword)
+        {
+            var searchButton = WaitHelper.WaitUntilVisible(searchIcon);
+
+            ((IJavaScriptExecutor)Driver).ExecuteScript(
+                "arguments[0].scrollIntoView({block: 'center'});",
                 searchButton);
+
+            searchButton.Click();
 
             WaitHelper.WaitUntilVisible(searchBox).SendKeys(keyword);
 
-            WaitHelper.WaitUntilClickable(findButton).Click();
+            WaitHelper.WaitUntilVisible(findButton).Click();
         }
 
         public void HoverOverMenu(Menu page)
