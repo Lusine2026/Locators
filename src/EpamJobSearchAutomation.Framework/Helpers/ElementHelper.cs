@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using EpamJobSearchAutomation.Framework.Logging;
 
 namespace EpamJobSearchAutomation.Framework.Helpers
 {
@@ -46,16 +47,35 @@ namespace EpamJobSearchAutomation.Framework.Helpers
 
         public void ClosePdfWindow(string originalWindow)
         {
-            foreach (var window in driver.WindowHandles.ToList())
+            Logger.Info($"Window count: {driver.WindowHandles.Count}");
+
+            try
             {
-                if (window != originalWindow)
+                if (driver.WindowHandles.Count > 1)
                 {
-                    driver.SwitchTo().Window(window);
-                    driver.Close();
+                    Logger.Info("PDF opened in a new window/tab.");
+
+                    foreach (var window in driver.WindowHandles.ToList())
+                    {
+                        if (window != originalWindow)
+                        {
+                            driver.SwitchTo().Window(window);
+                            driver.Close();
+                        }
+                    }
+
+                    driver.SwitchTo().Window(originalWindow);
+                }
+                else
+                {
+                    Logger.Info("PDF opened in the same browser tab. Navigating back.");
+                    driver.Navigate().Back();
                 }
             }
-
-            driver.SwitchTo().Window(originalWindow);
+            catch (Exception ex)
+            {
+                throw new Exception("Unable to close PDF window.", ex);
+            }
         }
     }
 }
