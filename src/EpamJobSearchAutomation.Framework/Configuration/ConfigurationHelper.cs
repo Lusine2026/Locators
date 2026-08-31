@@ -25,6 +25,10 @@ namespace EpamJobSearchAutomation.Framework.Configuration
                 .Get<LoggingSettings>()!;
 
         public static string ApplicationUrl =>
-            Configuration["ApplicationUrl"]!;
+             Configuration["ApplicationUrl"]!;
+
+        public static string ApiBaseUrl =>
+            Configuration["ApiBaseUrl"]!;
+
     }
 }
