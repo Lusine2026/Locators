@@ -1,0 +1,97 @@
+name: CI Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+  schedule:
+    - cron: '0 6 * * *'
+
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: 'Browser for UI tests'
+        required: true
+        type: choice
+        options:
+          - Chrome
+          - Firefox
+          - Edge
+        default: Chrome
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Setup Chrome
+        if: ${{ (inputs.browser || 'Chrome') == 'Chrome' }}
+        uses: browser-actions/setup-chrome@v2
+
+      - name: Setup Firefox
+        if: ${{ (inputs.browser || 'Chrome') == 'Firefox' }}
+        uses: browser-actions/setup-firefox@v1
+
+      - name: Setup Edge
+        if: ${{ (inputs.browser || 'Chrome') == 'Edge' }}
+        uses: browser-actions/setup-edge@v1
+
+      - name: Restore dependencies
+        run: dotnet restore EpamJobSearchAutomation.sln
+
+      - name: Build solution
+        run: dotnet build EpamJobSearchAutomation.sln --no-restore
+
+      - name: Run API tests
+        id: api-tests
+        run: >
+          dotnet test
+          tests/EpamJobSearchAutomation.API.Tests/EpamJobSearchAutomation.API.Tests.csproj
+          --no-build
+          --logger "trx;LogFileName=api-test-results.trx"
+          --results-directory ./TestResults/API
+
+      - name: Run UI tests
+        if: ${{ always() }}
+        env:
+          ENVIRONMENT: CI
+          BROWSER: ${{ inputs.browser || 'Chrome' }}
+        run: >
+          dotnet test
+          tests/EpamJobSearchAutomation.Tests/EpamJobSearchAutomation.Tests.csproj
+          --no-build
+          --logger "trx;LogFileName=ui-test-results.trx"
+          --results-directory ./TestResults/UI
+
+      - name: Publish API test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-results
+          path: ./TestResults/API
+          if-no-files-found: warn
+
+      - name: Publish UI test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-test-results
+          path: ./TestResults/UI
+          if-no-files-found: warn
+
+      - name: Publish screenshots
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: tests/EpamJobSearchAutomation.Tests/bin/Debug/net8.0/Screenshots
+          if-no-files-found: warn

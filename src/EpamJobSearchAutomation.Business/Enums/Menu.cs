@@ -15,11 +15,11 @@
         {
             return locator switch
             {
-                Menu.Insights => "//span[contains(@class,'top-navigation')]//a[contains(@href,'/insights')]",
-                Menu.Services => "//span[contains(@class,'top-navigation')]//a[contains(@href,'/services')]",
-                Menu.Industries => "//span[contains(@class,'top-navigation')]//a[contains(@href,'/industries')]",
-                Menu.Careers => "//span[contains(@class,'top-navigation')]//a[contains(@href,'/careers')]",
-                Menu.About => "//span[contains(@class,'top-navigation')]//a[contains(@href,'/about')]",
+                Menu.Services => "//span[contains(@class,'top-navigation')]//a[text()='Services']",
+                Menu.Industries => "//span[contains(@class,'top-navigation')]//a[text()='Industries']",
+                Menu.Insights => "//span[contains(@class,'top-navigation')]//a[text()='Insights']",
+                Menu.Careers => "//span[contains(@class,'top-navigation')]//a[text()='Careers']",
+                Menu.About => "//span[contains(@class,'top-navigation')]//a[text()='About']",
                 _ => throw new ArgumentOutOfRangeException(nameof(locator))
             };
         }

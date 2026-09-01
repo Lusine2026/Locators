@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using EpamJobSearchAutomation.Framework.Enums;
+using Microsoft.Extensions.Configuration;
 
 namespace EpamJobSearchAutomation.Framework.Configuration
 {
@@ -14,10 +15,25 @@ namespace EpamJobSearchAutomation.Framework.Configuration
         private static string EnvironmentName =>
                 Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "Local";
 
-        public static BrowserSettings BrowserSettings =>
-            Configuration
-                .GetSection("Browser")
-                .Get<BrowserSettings>()!;
+        public static BrowserSettings BrowserSettings
+        {
+            get
+            {
+                var settings = Configuration
+                    .GetSection("Browser")
+                    .Get<BrowserSettings>()!;
+
+                var browser = Environment.GetEnvironmentVariable("BROWSER");
+
+                if (!string.IsNullOrWhiteSpace(browser) &&
+                    Enum.TryParse<BrowserType>(browser, true, out var browserType))
+                {
+                    settings.Browser = browserType;
+                }
+
+                return settings;
+            }
+        }
 
         public static LoggingSettings LoggingSettings =>
             Configuration

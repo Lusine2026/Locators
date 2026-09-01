@@ -22,19 +22,40 @@ namespace EpamJobSearchAutomation.Framework.Browser
         public void AcceptCookies()
         {
             Logger.Info("Accepting cookies");
+
             try
             {
-                var button = waitHelper.WaitUntilClickable(acceptCookiesButton);
+                waitHelper.Until(
+                    d =>
+                    {
+                        try
+                        {
+                            var element = d.FindElement(acceptCookiesButton);
 
-                ((IJavaScriptExecutor)driver)
-                    .ExecuteScript("arguments[0].click();", button);
+                            if (!element.Displayed || !element.Enabled)
+                                return false;
+
+                            ((IJavaScriptExecutor)d)
+                                .ExecuteScript("arguments[0].click();", element);
+
+                            return true;
+                        }
+                        catch (NoSuchElementException)
+                        {
+                            return false;
+                        }
+                        catch (StaleElementReferenceException)
+                        {
+                            return false;
+                        }
+                    },
+                    TimeSpan.FromSeconds(5));
 
                 Logger.Info("Cookies accepted");
             }
-            catch (Exception ex)
+            catch (WebDriverTimeoutException)
             {
-                Logger.Error($"Accept cookies failed: {ex.Message}");
-                throw;
+                Logger.Info("Cookies button was not found. Continuing without accepting cookies.");
             }
         }
     }

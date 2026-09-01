@@ -71,7 +71,19 @@ public abstract class BaseTest
 
             Directory.CreateDirectory(folder);
 
-            string fileName = $"{TestContext.CurrentContext.Test.Name}_{DateTime.Now:yyyyMMdd_HHmmss}.png";
+            string testName = TestContext.CurrentContext.Test.Name;
+
+            char[] invalidCharacters =
+            {
+            '"', ':', '<', '>', '|', '*', '?', '\r', '\n'
+        };
+
+            foreach (char invalidChar in invalidCharacters)
+            {
+                testName = testName.Replace(invalidChar, '_');
+            }
+
+            string fileName = $"{testName}_{DateTime.Now:yyyyMMdd_HHmmss}.png";
             string path = Path.Combine(folder, fileName);
 
             screenshotDriver
