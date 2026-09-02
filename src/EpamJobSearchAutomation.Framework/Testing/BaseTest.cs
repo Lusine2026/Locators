@@ -73,12 +73,7 @@ public abstract class BaseTest
 
             string testName = TestContext.CurrentContext.Test.Name;
 
-            char[] invalidCharacters =
-            {
-            '"', ':', '<', '>', '|', '*', '?', '\r', '\n'
-        };
-
-            foreach (char invalidChar in invalidCharacters)
+            foreach (char invalidChar in Path.GetInvalidFileNameChars())
             {
                 testName = testName.Replace(invalidChar, '_');
             }
