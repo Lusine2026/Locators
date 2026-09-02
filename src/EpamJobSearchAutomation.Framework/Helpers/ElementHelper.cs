@@ -49,32 +49,25 @@ namespace EpamJobSearchAutomation.Framework.Helpers
         {
             Logger.Info($"Window count: {driver.WindowHandles.Count}");
 
-            try
+            if (driver.WindowHandles.Count > 1)
             {
-                if (driver.WindowHandles.Count > 1)
-                {
-                    Logger.Info("PDF opened in a new window/tab.");
+                Logger.Info("PDF opened in a new window/tab.");
 
-                    foreach (var window in driver.WindowHandles.ToList())
+                foreach (var window in driver.WindowHandles.ToList())
+                {
+                    if (window != originalWindow)
                     {
-                        if (window != originalWindow)
-                        {
-                            driver.SwitchTo().Window(window);
-                            driver.Close();
-                        }
+                        driver.SwitchTo().Window(window);
+                        driver.Close();
                     }
+                }
 
-                    driver.SwitchTo().Window(originalWindow);
-                }
-                else
-                {
-                    Logger.Info("PDF opened in the same browser tab. Navigating back.");
-                    driver.Navigate().Back();
-                }
+                driver.SwitchTo().Window(originalWindow);
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception("Unable to close PDF window.", ex);
+                Logger.Info("PDF opened in the same browser tab. Navigating back.");
+                driver.Navigate().Back();
             }
         }
     }
