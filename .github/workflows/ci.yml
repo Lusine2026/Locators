@@ -1,13 +1,6 @@
 name: CI Tests
 
 on:
-  pull_request:
-    branches:
-      - main
-
-  schedule:
-    - cron: '0 6 * * *'
-
   workflow_dispatch:
     inputs:
       browser:
@@ -49,6 +42,7 @@ jobs:
         run: dotnet restore EpamJobSearchAutomation.sln
 
       - name: Build solution
+        id: build
         run: dotnet build EpamJobSearchAutomation.sln --no-restore
 
       - name: Run API tests
@@ -61,7 +55,7 @@ jobs:
           --results-directory ./TestResults/API
 
       - name: Run UI tests
-        if: ${{ always() }}
+        if: ${{ always() && steps.build.outcome == 'success' }}
         env:
           ENVIRONMENT: CI
           BROWSER: ${{ inputs.browser || 'Chrome' }}

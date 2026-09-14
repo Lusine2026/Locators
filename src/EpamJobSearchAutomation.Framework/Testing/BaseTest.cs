@@ -63,34 +63,36 @@ public abstract class BaseTest
         }
     }
 
-    private void TakeScreenshot()
+   private const string AdditionalInvalidFileNameCharacters = "\":<>|*?/\\\r\n";
+
+private void TakeScreenshot()
+{
+    if (Driver is ITakesScreenshot screenshotDriver)
     {
-        if (Driver is ITakesScreenshot screenshotDriver)
+        string folder = "Screenshots";
+
+        Directory.CreateDirectory(folder);
+
+        string testName = TestContext.CurrentContext.Test.Name;
+
+        char[] invalidCharacters = Path.GetInvalidFileNameChars()
+            .Concat(AdditionalInvalidFileNameCharacters)
+            .Distinct()
+            .ToArray();
+
+        foreach (char invalidCharacter in invalidCharacters)
         {
-            string folder = "Screenshots";
-
-            Directory.CreateDirectory(folder);
-
-            string testName = TestContext.CurrentContext.Test.Name;
-
-            char[] invalidCharacters =
-            {
-            '"', ':', '<', '>', '|', '*', '?', '\r', '\n'
-        };
-
-            foreach (char invalidChar in invalidCharacters)
-            {
-                testName = testName.Replace(invalidChar, '_');
-            }
-
-            string fileName = $"{testName}_{DateTime.Now:yyyyMMdd_HHmmss}.png";
-            string path = Path.Combine(folder, fileName);
-
-            screenshotDriver
-                .GetScreenshot()
-                .SaveAsFile(path);
-
-            Logger.Error($"Screenshot saved: {path}");
+            testName = testName.Replace(invalidCharacter, '_');
         }
+
+        string fileName = $"{testName}_{DateTime.Now:yyyyMMdd_HHmmss}.png";
+        string path = Path.Combine(folder, fileName);
+
+        screenshotDriver
+            .GetScreenshot()
+            .SaveAsFile(path);
+
+        Logger.Error($"Screenshot saved: {path}");
+    }
     }
 }
